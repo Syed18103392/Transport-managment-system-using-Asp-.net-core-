@@ -1,0 +1,673 @@
+﻿@model F_W_M_C
+@{
+    ViewData["Title"] = "Facultypanel";
+}
+
+<!--------------------error-notification-->
+@if (ViewBag.addTransportStatus == "Success")
+{
+    <div class="modal fade" id="staticBackdrop" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Successfull</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="alert-danger"> New Transport Adding Successfully</p>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else if (ViewBag.addTransportStatus == "Error")
+{
+    <div class="modal fade" id="staticBackdrop" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Failed</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="alert-success"> Try Again?</p>
+                </div>
+                <div class="modal-footer">
+                    <a class="nav-link" data-dismiss="modal" data-toggle="modal" data-target="#exampleModalCenter">Yes</a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else if (ViewBag.addFacultyStatus == "Success")
+{
+    <div class="modal fade" id="staticBackdrop" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Successfull</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="alert-success"> New Faculty Adding Successfully</p>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else if (ViewBag.addFacultyStatus == "Error")
+{
+    <div class="modal fade" id="staticBackdrop" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Failed</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="alert-danger"> Faculty Already Registread<br>Try Again?</p>
+                </div>
+                <div class="modal-footer">
+                    <a class="nav-link" data-dismiss="modal" data-toggle="modal" data-target="#AddNewFacultyView">Yes</a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<!--------------------error-notification-->
+<!--------------------Add Faculty-->
+<!-- Modal -->
+<div class="modal fade" id="AddNewFacultyView" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Registration From Fill Up</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form asp-action="Adminpanel">
+                <div class="facultyRegistrationRequest modal-body ">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <table>
+                        <tr>
+                            <td><label asp-for="@Model.fi.id" class="control-label">University ID:</label></td>
+                            <td>
+                                <input type="text" asp-for="@Model.fi.id" placeholder="18103392" class="form-control" />
+                                <span asp-validation-for="@Model.fi.id" class="text-danger"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label asp-for="@Model.fi.fFName" class="control-label">First Name:</label></td>
+                            <td>
+                                <input type="text" asp-for="@Model.fi.fFName" placeholder="Md." class="form-control" />
+                                <span asp-validation-for="@Model.fi.fFName" class="text-danger"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label asp-for="@Model.fi.fLName" class="control-label">Last Name":</label></td>
+                            <td>
+                                <input type="text" placeholder="Syed Sajib" asp-for="@Model.fi.fLName" class="form-control" />
+                                <span asp-validation-for="@Model.fi.fLName" class="text-danger"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label asp-for="@Model.fi.fUName" class="control-label">User Name:</label></td>
+                            <td>
+                                <input type="text" placeholder="Sajib_CodingHunter" asp-for="@Model.fi.fUName" class="form-control" />
+                                <span asp-validation-for="@Model.fi.fUName" class="text-danger"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label asp-for="@Model.fi.fDesignation" class="control-label">Designation:</label></td>
+                            <td>
+                                <input type="text" asp-for="@Model.fi.fDesignation" placeholder="Chair" class="form-control" />
+                                <span asp-validation-for="@Model.fi.fDesignation" class="text-danger"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label asp-for="@Model.fi.fContactNumber" class="control-label">Contact Number:</label></td>
+                            <td>
+                                <input type="text" asp-for="@Model.fi.fContactNumber" placeholder="+880 1630000021" class="form-control" />
+                                <span asp-validation-for="@Model.fi.fContactNumber" class="text-danger"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label asp-for="@Model.fi.fEmail" class="control-label">Email:</label></td>
+                            <td>
+                                <input type="email" asp-for="@Model.fi.fEmail" placeholder="usr@mail.com" class="form-control" />
+                                <span asp-validation-for="@Model.fi.fEmail" class="text-danger"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label asp-for="@Model.fi.fNPassword" class="control-label">New Password:</label></td>
+                            <td>
+                                <input type="password" asp-for="@Model.fi.fNPassword" placeholder="********" class="form-control" />
+                                <span asp-validation-for="@Model.fi.fNPassword" class="text-danger"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label asp-for="@Model.fi.fCPassword" class="control-label">Confirm Password:</label></td>
+                            <td>
+                                <input type="password" asp-for="@Model.fi.fCPassword" placeholder="********" class="form-control" />
+                                <span asp-validation-for="@Model.fi.fCPassword" class="text-danger"></span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+
+
+
+                <p>@ViewBag.message</p>
+            </form>
+
+        </div>
+        @section Scripts {
+            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        }
+    </div>
+</div>
+<!------ Add Faculty--------------------end----->
+<!------ view Transport --------------------start----->
+<!-- Modal -->
+<div class="modal fade" id="ViewTransportList" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:1000px !important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <center> <h2 class="modal-title" id="exampleModalLongTitle">Transport List</h2></center>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="facultyRegistrationRequest modal-body uk-panel-scrollable ">
+                <table style="border-spacing: 10px">
+                    <tr style="padding: 5px">
+                        <th style="min-width:100px;">Transport Number</th>
+                        <th style="min-width:100px;">Transport Type</th>
+                        <th style="min-width:100px;">Driver Name</th>
+                        <th style="min-width:100px;">Driver Number</th>
+                        <th style="min-width:100px;">Route</th>
+                        <th style="min-width:100px;">Status</th>
+                    </tr>
+                    @foreach (var item in Model.Tishow)
+                    {
+                        var values = new string[] { item.TransportNumber, item.TransportType, item.DriverName, item.DriverNumber, item.route, item.Status };
+                        if (values != null)
+                        {
+                            <tr style="padding: 5px;border-bottom:1px solid rgba(128, 128, 128, 0.88);">
+                                @foreach (var value in values)
+                                {
+                                    <td style="font-size:14px; min-width:100px;padding:5px 0">
+
+                                        @value
+
+                                    </td>
+                                }
+                            </tr>
+                        }
+                        else
+                        {
+                            <h1>No Transport Available</h1>
+                        }
+                    }
+                </table>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" data-dismiss="modal" value="close" class="btn btn-primary" />
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!------ view transport --------------------end----->
+<!------ view Admin --------------------start----->
+<!-- Modal -->
+<div class="modal fade" id="ViewAdminList" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:1000px !important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <center> <h2 class="modal-title" id="exampleModalLongTitle">Admin List</h2></center>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="facultyRegistrationRequest modal-body uk-panel-scrollable ">
+                <table style="border-spacing: 10px">
+                    <tr style="padding: 5px">
+                        <th style="min-width:100px;">Id</th>
+                        <th style="min-width:100px;"> First Name</th>
+                        <th style="min-width:100px;">Last Name</th>
+                        <th style="min-width:100px;">User Name</th>
+                        <th style="min-width:100px;">Contact Number</th>
+                        <th style="min-width:100px;">Contact Email</th>
+                    </tr>
+                    @foreach (var item in Model.Airetrive)
+                    {
+                        var values = new string[] { item.id, item.aFName, item.aLName, item.aUName,item.aContactNumber, item.aEmail };
+                        if (values != null)
+                        {
+                            <tr style="padding: 5px;border-bottom:1px solid rgba(128, 128, 128, 0.88);">
+                                @foreach (var value in values)
+                                {
+                                    <td style="font-size:14px; min-width:100px;padding:5px 0">
+
+                                        @value
+
+                                    </td>
+                                }
+                            </tr>
+                        }
+                        else
+                        {
+                            <h1>No Admin Available</h1>
+                        }
+                    }
+                </table>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" data-dismiss="modal" value="close" class="btn btn-primary" />
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!------ view Admin --------------------end----->
+<!------ edit identity --------------------start----->
+<!-- Modal -->
+<div class="modal fade" id="EditAdminInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit Information Fill Up</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @foreach (var item in Model.fishow)
+            {
+                <form asp-action="Facultypanel">
+                    <div class="facultyRegistrationRequest modal-body ">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <table>
+                            <tr>
+                                <td><label asp-for="@Model.fi.id" class="control-label">University ID:</label></td>
+                                <td>
+                                    <input value="@item.id" type="text" asp-for="@Model.fi.id" placeholder="18103392" class="form-control uk-disabled" />
+                                    <span asp-validation-for="@Model.fi.id" class="text-danger"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label asp-for="@Model.fi.fFName" class="control-label">First Name:</label></td>
+                                <td>
+                                    <input value="@item.fFName" type="text" asp-for="@Model.fi.fFName" placeholder="Md." class="form-control" />
+                                    <span asp-validation-for="@Model.Aitakeinput.aFName" class="text-danger"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label asp-for="@Model.fi.fLName" class="control-label">Last Name":</label></td>
+                                <td>
+                                    <input value="@item.fLName" type="text" placeholder="Syed Sajib" asp-for="@Model.fi.fLName" class="form-control" />
+                                    <span asp-validation-for="@Model.fi.fLName" class="text-danger"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label asp-for="@Model.fi.fUName" class="control-label">User Name:</label></td>
+                                <td>
+                                    <input value="@item.fUName" type="text" placeholder="Sajib_CodingHunter" asp-for="@Model.fi.fUName" class="form-control" />
+                                    <span asp-validation-for="@Model.fi.fUName" class="text-danger"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label asp-for="@Model.fi.fDesignation" class="control-label">Designation:</label></td>
+                                <td>
+                                    <input value="@item.fDesignation" type="text" placeholder="Sajib_CodingHunter" asp-for="@Model.fi.fDesignation" class="form-control" />
+                                    <span asp-validation-for="@Model.fi.fDesignation" class="text-danger"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label asp-for="@Model.fi.fContactNumber" class="control-label">Contact Number:</label></td>
+                                <td>
+                                    <input value="@item.fContactNumber" type="text" asp-for="@Model.fi.fContactNumber" placeholder="+880 1630000021" class="form-control" />
+                                    <span asp-validation-for="@Model.fi.fContactNumber" class="text-danger"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label asp-for="@Model.fi.fEmail" class="control-label">Contact Email:</label></td>
+                                <td>
+                                    <input value="@item.fEmail" type="text" asp-for="@Model.fi.fEmail" placeholder="u@mail.com" class="form-control" />
+                                    <span asp-validation-for="@Model.fi.fEmail" class="text-danger"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label asp-for="@Model.oldpass" class="control-label">Old Password:</label></td>
+                                <td>
+                                    <input value="@item.fNPassword" type="password" asp-for="@Model.oldpass" placeholder="********" class="form-control" />
+                                    <span asp-validation-for="@Model.Aitakeinput.aContactNumber" class="text-danger"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label asp-for="@Model.Aitakeinput.aNPassword" class="control-label">New Password:</label></td>
+                                <td>
+                                    <input value="@item.fNPassword" type="password" asp-for="@Model.Aitakeinput.aNPassword" placeholder="********" class="form-control" />
+                                    <span asp-validation-for="@Model.Aitakeinput.aNPassword" class="text-danger"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label asp-for="@Model.Aitakeinput.aCPassword" class="control-label">Confirm Password:</label></td>
+                                <td>
+                                    <input value="@item.fCPassword" type="password" asp-for="@Model.Aitakeinput.aCPassword" placeholder="********" class="form-control" />
+                                    <span asp-validation-for="@Model.Aitakeinput.aCPassword" class="text-danger"></span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" value="Update" class="btn btn-primary" />
+                    </div>
+
+
+
+                    <p>@ViewBag.message</p>
+                </form>
+            }
+        </div>
+    </div>
+</div>
+
+<!------ edit identity --------------------end----->
+<!--================Header Menu Area =================-->
+<header class="header_area">
+    <div class="top_menu d-lg-block d-none">
+        <div class="container">
+            <div class="float-left">
+                <ul class="left_side">
+                    <li>
+                        <a href="login.html">
+                            <i class="fa fa-facebook-f"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="login.html">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="login.html">
+                            <i class="fa fa-dribbble"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="login.html">
+                            <i class="fa fa-behance"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="float-right">
+                <ul class="right_side">
+                    <li>
+                        <a href="login.html">
+                            <i class="lnr lnr-phone-handset"></i>
+                            +880-1636179521
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="lnr lnr-envelope"></i>
+                            18103392@iubat.edu
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="main_menu">
+        <nav class="navbar navbar-expand-lg w-100">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <a class="navbar-brand logo_h" href="index.html">
+                    <img class="logoimgsetting" src="~/img/logo.png" alt="" />
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+                    <div class="row w-100">
+                        <div class="col-lg-12 pr-lg-0">
+                            <ul class="nav navbar-nav ml-auto justify-content-end">
+
+                                <li class="nav-item submenu dropdown ">
+                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                       aria-expanded="false">Admin</a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-target="#ViewAdminList" data-toggle="modal">View Admin</a>
+                                        </li>
+                                        
+                                    </ul>
+                                </li>
+                                <li class="nav-item submenu dropdown ">
+                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                       aria-expanded="false">Transport</a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="modal" data-target="#ViewTransportList">View Transport List</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-action="SearchTransport">Search For Transport</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item submenu dropdown active">
+                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                       aria-expanded="false">@ViewBag.Name</a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-target="#EditAdminInfo" data-toggle="modal">Edit Profile</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-action="Logout">Logout</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+<!--================Header Menu Area =================-->
+<!--================ Home Banner Area =================-->
+<section class="home_banner_area banner-area">
+    <div class="banner_inner d-flex align-items-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="banner_content d-flex flex-md-row flex-column">
+                        <div class="banner-left text-md-right">
+                            <h1 class="text-uppercase">Faculty Field</h1>
+                        </div>
+                        <div class="banner-right position-relative">
+                            <p>
+                                Faculty Controlling Page for Controlling All.
+                            </p>
+                            <span class="main_btn mt-4 mt-md-0" href="#">
+                                <a href="index.html" class="text-white">Home</a>
+                                <i class="fa fa-arrow-right mx-2"></i>
+                                <a href="blog.html" class="text-white">Blog</a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================ End Home Banner Area =================-->
+<!--================Blog Area =================-->
+<section class="blog_area section_gap">
+    <div class="blogcontainer">
+        <div class="container  " style="max-width: 1312px !important;">
+            <div class="row">
+                <div class="">
+                    <!-- Notification Center -->
+                    <center><h2>Notification</h2></center>
+
+                    <hr>
+                    <table style="border-spacing: 10px">
+                        <tr style="padding: 5px">
+                            <th style="min-width:200px;">Sender</th>
+                            <th style="min-width:200px;">Purpose</th>
+                            <th style="min-width:200px;">Date</th>
+                            <th style="min-width:200px;">Time</th>
+                            <th style="min-width:200px;">Details</th>
+                            <th style="min-width:200px;">Status</th>
+                            <th style="min-width:200px;">Action</th>
+                        </tr>
+                        
+                        @foreach (var item in Model.Tf)
+                        {
+                            var values = new string[] { item.Nfrom, item.NFor, item.NComingDate, item.NComingTime, item.NDetails, item.NStatus,"Action" };
+                            if (values != null)
+                            {
+                                <tr style="padding: 5px;border-bottom:1px solid rgba(128, 128, 128, 0.88);">
+                                    @foreach (var value in values)
+                                    {
+                                    <td style="font-size:14px; min-width:100px;padding:5px 0">
+                                        @if (value == "Action")
+                                        {
+                                            <a class="btn btn-danger" asp-route-id="@item.id" asp-action="AM"  style="color:white">Remove</a>
+                                        }
+                                        else
+                                        {@value}
+
+                                    </td>
+                                    }
+                                </tr>
+                            }
+                            else
+                            {
+                                                            }
+                        }
+                    </table>
+                    <!-- Notificaton Center End -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================Blog Area =================-->
+<!--================ Start CTA Area ================-->
+<section class="cta_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="cta_inner d-flex flex-md-row flex-column justify-content-between align-items-center">
+                    <div class="mb-md-0 mb-4 text-sm-left text-center">
+                        <p>Get a quick response from our team</p>
+                        <h1>IUBAT-Transportation Controller</h1>
+                    </div>
+                    <div class="">
+                        <a href="#" class="main_btn">Explore More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================ End CTA Area ================-->
+<!--================ start footer Area =================-->
+<footer class="footer-area section_gap">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5 col-md-6 col-sm-6">
+                <div class="single-footer-widget">
+                    <h6>About Us</h6>
+                    <p>
+                        If you own an Iphone, you’ve probably already worked out how much fun it is to use it to
+                        watch movies-it
+                        has
+                        that.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-5  col-md-6 col-sm-6">
+                <div class="single-footer-widget">
+                    <h6>Newsletter</h6>
+                    <p>Stay update with our latest</p>
+                    <div class="" id="mc_embed_signup">
+                        <form target="_blank" novalidate="true" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
+                              method="get" class="form-inline">
+                            <input class="form-control" name="EMAIL" placeholder="Email Address" onfocus="this.placeholder = ''"
+                                   onblur="this.placeholder = 'Email Address'" required="" type="email">
+                            <button class="click-btn btn btn-default"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+                            <div style="position: absolute; left: -5000px;">
+                                <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text">
+                            </div>
+                            <div class="info"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-6 col-sm-6 social-widget">
+                <div class="single-footer-widget">
+                    <h6>Follow Us</h6>
+                    <p>Let us be social</p>
+                    <div class="footer-social d-flex align-items-center">
+                        <a href="#"><i class="fa fa-facebook"></i></a>
+                        <a href="#"><i class="fa fa-twitter"></i></a>
+                        <a href="#"><i class="fa fa-dribbble"></i></a>
+                        <a href="#"><i class="fa fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <p class="footer-text">
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    Copyright &copy;
+                    <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+<!--================ End footer Area =================-->
